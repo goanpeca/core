@@ -5,7 +5,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import { IBaseSpace } from '../../models';
+import { IBaseSpace } from '../../api2';
 
 export type ISpaceState = {
   spaces: IBaseSpace[];

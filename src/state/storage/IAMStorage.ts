@@ -5,7 +5,7 @@
 
 import jwt_decode from 'jwt-decode';
 import { getCookie } from '../../utils';
-import { IUser, ANONYMOUS_USER, ANONYMOUS_USER_TOKEN } from '../../models';
+import { IUser, ANONYMOUS_USER, ANONYMOUS_USER_TOKEN } from '../../api2';
 
 export const JWT_DATALAYER_ISSUER = 'https://id.datalayer.run';
 

@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import { Kernel } from '@jupyterlab/services';
+import type { Kernel } from '@jupyterlab/services';
 
 export const BACKWARDS_COMPATIBLE_KERNEL_TYPES_MAP = {
   // Backwards compatible mapping.

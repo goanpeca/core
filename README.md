@@ -186,6 +186,48 @@ Features:
 - Interactive notebook viewer with real-time outputs
 - Clean, responsive UI with GitHub Primer components
 
+## API Architecture
+
+The Datalayer Core provides a clean, stateless API architecture designed for both Node.js and browser environments:
+
+### Unified API Client
+
+```typescript
+import { DatalayerClient } from '@datalayer/core/api2';
+
+const client = new DatalayerClient({
+  baseUrl: 'https://prod1.datalayer.run',
+  token: 'your-api-token'
+});
+
+// Identity & Access Management
+const user = await client.iam.users.getMe();
+const orgs = await client.iam.organizations.getOrganizations();
+const tokens = await client.iam.tokens.getTokens();
+
+// Runtime Management
+const environments = await client.runtimes.getEnvironments();
+const runtimes = await client.runtimes.getRuntimes();
+const snapshot = await client.runtimes.createSnapshot({ pod_name: 'my-runtime' });
+
+// Workspace Management
+const spaces = await client.spacer.spaces.getUserSpaces();
+const notebook = await client.spacer.notebooks.getNotebook('notebook-id');
+const courses = await client.spacer.courses.getUserCourseEnrollments();
+```
+
+### Clean Node.js Exports
+
+The `api2` module provides safe Node.js exports without browser dependencies:
+
+- **IAM API**: Authentication, users, organizations, teams, tokens, secrets, usage
+- **Runtimes API**: Environments, compute runtimes, runtime snapshots
+- **Spacer API**: Spaces, notebooks, documents, assignments, courses, exercises, datasets
+
+### Model Architecture
+
+All domain models are now centralized in `api2/models/` with backward-compatible re-exports from `models/`. This enables clean separation between API communication types and rich domain models.
+
 ## Platform Integration
 
 Datalayer adds AI capabilities and scalable compute runtimes to your development workflows. The platform is designed to seamlessly integrate into your existing processes and supercharge your computations with the processing power you need.

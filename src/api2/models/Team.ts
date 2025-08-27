@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import { asArray } from '../utils';
+import { asArray } from './utils';
 import { asUser } from './User';
 import { TeamMember } from './TeamMember';
 import IOrganization from './Organization';

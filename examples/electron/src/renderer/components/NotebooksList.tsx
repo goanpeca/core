@@ -46,7 +46,7 @@ const NotebooksList: React.FC = () => {
 
       // Use the IPC bridge to fetch notebooks
       const response = await window.datalayerAPI.listNotebooks();
-      
+
       if (response.success && response.data) {
         // Transform the response to our NotebookItem format
         // Based on the Datalayer API item structure
@@ -54,17 +54,22 @@ const NotebooksList: React.FC = () => {
           id: nb.uid || nb.id || nb.path,
           name: nb.name_t || nb.name || nb.path?.split('/').pop() || 'Untitled',
           path: nb.path || `/${nb.name_t || nb.name || 'notebook'}`,
-          createdAt: nb.creation_ts_dt || nb.created_at || new Date().toISOString(),
-          modifiedAt: nb.last_update_ts_dt || nb.modified_at || new Date().toISOString(),
+          createdAt:
+            nb.creation_ts_dt || nb.created_at || new Date().toISOString(),
+          modifiedAt:
+            nb.last_update_ts_dt || nb.modified_at || new Date().toISOString(),
           size: nb.size,
           kernel: nb.kernel_spec?.display_name || 'Python 3',
         }));
 
         setNotebooks(notebookItems);
-        
+
         // Log space info if available
         if (response.spaceInfo) {
-          console.log('Loaded notebooks from space:', response.spaceInfo.name || response.spaceInfo.handle);
+          console.log(
+            'Loaded notebooks from space:',
+            response.spaceInfo.name || response.spaceInfo.handle
+          );
         }
       } else {
         setError(response.error || 'Failed to load notebooks');
@@ -103,7 +108,7 @@ const NotebooksList: React.FC = () => {
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    
+
     if (diffHours < 1) {
       const diffMinutes = Math.floor(diffMs / (1000 * 60));
       return `${diffMinutes} minutes ago`;
@@ -126,7 +131,14 @@ const NotebooksList: React.FC = () => {
 
   return (
     <Box>
-      <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box
+        sx={{
+          mb: 3,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Box>
           <Heading as="h2" sx={{ mb: 1 }}>
             Notebooks
@@ -141,19 +153,6 @@ const NotebooksList: React.FC = () => {
       </Box>
 
       {loading ? (
-        <Box sx={{ p: 6, textAlign: 'center', bg: 'canvas.subtle', border: '1px solid', borderColor: 'border.default', borderRadius: 2 }}>
-          <Spinner size="large" />
-          <Text sx={{ mt: 2, display: 'block', color: 'fg.muted' }}>Loading notebooks...</Text>
-        </Box>
-      ) : (
-        <>
-          {error && (
-            <Flash variant="danger" sx={{ mb: 3 }}>
-              {error}
-            </Flash>
-          )}
-
-          {notebooks.length === 0 ? (
         <Box
           sx={{
             p: 6,
@@ -164,92 +163,122 @@ const NotebooksList: React.FC = () => {
             borderRadius: 2,
           }}
         >
-          <FileIcon size={48} />
-          <Heading as="h3" sx={{ mt: 3, mb: 2 }}>
-            No notebooks yet
-          </Heading>
-          <Text sx={{ color: 'fg.subtle', mb: 3 }}>
-            Create your first notebook to get started
+          <Spinner size="large" />
+          <Text sx={{ mt: 2, display: 'block', color: 'fg.muted' }}>
+            Loading notebooks...
           </Text>
-          <Button onClick={handleCreateNotebook} leadingVisual={PlusIcon}>
-            Create Notebook
-          </Button>
         </Box>
       ) : (
-        <Box
-          sx={{
-            border: '1px solid',
-            borderColor: 'border.default',
-            borderRadius: 2,
-            overflow: 'hidden',
-          }}
-        >
-          <ActionList>
-            {notebooks.map((notebook) => (
-              <ActionList.Item
-                key={notebook.id}
-                onSelect={() => handleOpenNotebook(notebook)}
-                sx={{
-                  cursor: 'pointer',
-                  bg: selectedNotebook === notebook.id ? 'accent.subtle' : undefined,
-                }}
-              >
-                <ActionList.LeadingVisual>
-                  <FileIcon />
-                </ActionList.LeadingVisual>
-                <Box sx={{ flex: 1 }}>
-                  <Text sx={{ fontWeight: 'semibold' }}>{notebook.name}</Text>
-                  <Box sx={{ display: 'flex', gap: 3, mt: 1 }}>
-                    <Text sx={{ fontSize: 0, color: 'fg.subtle' }}>
-                      <ClockIcon size={12} /> {formatDate(notebook.modifiedAt)}
-                    </Text>
-                    <Text sx={{ fontSize: 0, color: 'fg.subtle' }}>
-                      Size: {formatSize(notebook.size)}
-                    </Text>
-                    <Label size="small" variant="accent">
-                      {notebook.kernel}
-                    </Label>
-                  </Box>
-                </Box>
-                <ActionList.TrailingVisual>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    <IconButton
-                      aria-label="Edit"
-                      icon={PencilIcon}
-                      size="small"
-                      variant="invisible"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleOpenNotebook(notebook);
-                      }}
-                    />
-                    <IconButton
-                      aria-label="Download"
-                      icon={DownloadIcon}
-                      size="small"
-                      variant="invisible"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDownloadNotebook(notebook);
-                      }}
-                    />
-                    <IconButton
-                      aria-label="Delete"
-                      icon={TrashIcon}
-                      size="small"
-                      variant="invisible"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteNotebook(notebook);
-                      }}
-                    />
-                  </Box>
-                </ActionList.TrailingVisual>
-              </ActionList.Item>
-            ))}
-          </ActionList>
-        </Box>
-      )}
+        <>
+          {error && (
+            <Flash variant="danger" sx={{ mb: 3 }}>
+              {error}
+            </Flash>
+          )}
+
+          {notebooks.length === 0 ? (
+            <Box
+              sx={{
+                p: 6,
+                textAlign: 'center',
+                bg: 'canvas.subtle',
+                border: '1px solid',
+                borderColor: 'border.default',
+                borderRadius: 2,
+              }}
+            >
+              <FileIcon size={48} />
+              <Heading as="h3" sx={{ mt: 3, mb: 2 }}>
+                No notebooks yet
+              </Heading>
+              <Text sx={{ color: 'fg.subtle', mb: 3 }}>
+                Create your first notebook to get started
+              </Text>
+              <Button onClick={handleCreateNotebook} leadingVisual={PlusIcon}>
+                Create Notebook
+              </Button>
+            </Box>
+          ) : (
+            <Box
+              sx={{
+                border: '1px solid',
+                borderColor: 'border.default',
+                borderRadius: 2,
+                overflow: 'hidden',
+              }}
+            >
+              <ActionList>
+                {notebooks.map(notebook => (
+                  <ActionList.Item
+                    key={notebook.id}
+                    onSelect={() => handleOpenNotebook(notebook)}
+                    sx={{
+                      cursor: 'pointer',
+                      bg:
+                        selectedNotebook === notebook.id
+                          ? 'accent.subtle'
+                          : undefined,
+                    }}
+                  >
+                    <ActionList.LeadingVisual>
+                      <FileIcon />
+                    </ActionList.LeadingVisual>
+                    <Box sx={{ flex: 1 }}>
+                      <Text sx={{ fontWeight: 'semibold' }}>
+                        {notebook.name}
+                      </Text>
+                      <Box sx={{ display: 'flex', gap: 3, mt: 1 }}>
+                        <Text sx={{ fontSize: 0, color: 'fg.subtle' }}>
+                          <ClockIcon size={12} />{' '}
+                          {formatDate(notebook.modifiedAt)}
+                        </Text>
+                        <Text sx={{ fontSize: 0, color: 'fg.subtle' }}>
+                          Size: {formatSize(notebook.size)}
+                        </Text>
+                        <Label size="small" variant="accent">
+                          {notebook.kernel}
+                        </Label>
+                      </Box>
+                    </Box>
+                    <ActionList.TrailingVisual>
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <IconButton
+                          aria-label="Edit"
+                          icon={PencilIcon}
+                          size="small"
+                          variant="invisible"
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleOpenNotebook(notebook);
+                          }}
+                        />
+                        <IconButton
+                          aria-label="Download"
+                          icon={DownloadIcon}
+                          size="small"
+                          variant="invisible"
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleDownloadNotebook(notebook);
+                          }}
+                        />
+                        <IconButton
+                          aria-label="Delete"
+                          icon={TrashIcon}
+                          size="small"
+                          variant="invisible"
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleDeleteNotebook(notebook);
+                          }}
+                        />
+                      </Box>
+                    </ActionList.TrailingVisual>
+                  </ActionList.Item>
+                ))}
+              </ActionList>
+            </Box>
+          )}
         </>
       )}
     </Box>

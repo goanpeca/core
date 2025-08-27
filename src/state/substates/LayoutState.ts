@@ -6,12 +6,7 @@
 import { ReactPortal } from 'react';
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import {
-  IAnyOrganization,
-  IAnySpace,
-  IAnyTeam,
-  ISpaceItem,
-} from '../../models';
+import { IAnyOrganization, IAnySpace, IAnyTeam, ISpaceItem } from '../../api2';
 
 export type BannerDisplayVariant = 'danger' | 'info' | 'success' | 'warning';
 

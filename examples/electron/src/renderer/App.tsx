@@ -54,7 +54,7 @@ const App: React.FC = () => {
       const match = userId.match(/github:(\d+)/);
       if (match && match[1]) {
         const githubId = match[1];
-        
+
         // First try to get user by ID
         const response = await fetch(`https://api.github.com/user/${githubId}`);
         if (response.ok) {
@@ -63,7 +63,9 @@ const App: React.FC = () => {
           console.log('GitHub user data:', userData);
         } else {
           // Fallback: search for user by ID
-          const searchResponse = await fetch(`https://api.github.com/search/users?q=id:${githubId}`);
+          const searchResponse = await fetch(
+            `https://api.github.com/search/users?q=id:${githubId}`
+          );
           if (searchResponse.ok) {
             const searchData = await searchResponse.json();
             if (searchData.items && searchData.items.length > 0) {
@@ -162,21 +164,21 @@ const App: React.FC = () => {
         // Using Google's DNS as a reliable endpoint
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
-        
+
         // Try multiple endpoints to ensure connectivity
         const endpoints = [
           'https://dns.google/resolve?name=example.com',
           'https://1.1.1.1/dns-query?name=example.com',
           'https://api.github.com/zen', // GitHub's API status endpoint
         ];
-        
+
         let isConnected = false;
         for (const endpoint of endpoints) {
           try {
-            const response = await fetch(endpoint, { 
+            const response = await fetch(endpoint, {
               method: 'HEAD',
               mode: 'no-cors',
-              signal: controller.signal 
+              signal: controller.signal,
             });
             isConnected = true;
             break;
@@ -184,7 +186,7 @@ const App: React.FC = () => {
             // Try next endpoint
           }
         }
-        
+
         clearTimeout(timeoutId);
         setIsOnline(isConnected || navigator.onLine);
       } catch {
@@ -200,7 +202,7 @@ const App: React.FC = () => {
       setIsOnline(true);
       checkConnectivity(); // Verify actual connectivity
     };
-    
+
     const handleOffline = () => {
       setIsOnline(false);
     };
@@ -289,10 +291,10 @@ const App: React.FC = () => {
             <Header>
               <Header.Item>
                 <Text
-                  sx={{ 
+                  sx={{
                     fontSize: 3,
                     fontWeight: 'bold',
-                    color: '#00D084',  // Datalayer brand green
+                    color: '#00D084', // Datalayer brand green
                     mr: 4,
                   }}
                 >
@@ -337,6 +339,7 @@ const App: React.FC = () => {
                 </Header.Link>
               </Header.Item>
               {/* Runtime tab hidden for demo - code still exists */}
+              {/* eslint-disable-next-line no-constant-binary-expression */}
               {false && (
                 <Header.Item>
                   <Header.Link
@@ -365,7 +368,9 @@ const App: React.FC = () => {
                   ) : isAuthenticated ? (
                     <Text sx={{ color: 'success.fg' }}>● Online</Text>
                   ) : (
-                    <Text sx={{ color: 'attention.fg' }}>● Not Authenticated</Text>
+                    <Text sx={{ color: 'attention.fg' }}>
+                      ● Not Authenticated
+                    </Text>
                   )}
                 </Text>
               </Header.Item>
@@ -412,7 +417,9 @@ const App: React.FC = () => {
                             />
                           </ActionList.LeadingVisual>
                           <Box>
-                            <Text sx={{ fontWeight: 'semibold', display: 'block' }}>
+                            <Text
+                              sx={{ fontWeight: 'semibold', display: 'block' }}
+                            >
                               {githubUser.name || githubUser.login}
                             </Text>
                             <Text sx={{ fontSize: 0, color: 'fg.muted' }}>
@@ -420,10 +427,13 @@ const App: React.FC = () => {
                             </Text>
                           </Box>
                         </ActionList.Item>
-                        
+
                         <ActionList.Divider />
-                        
-                        <ActionList.Item variant="danger" onSelect={handleLogout}>
+
+                        <ActionList.Item
+                          variant="danger"
+                          onSelect={handleLogout}
+                        >
                           <ActionList.LeadingVisual>
                             <SignOutIcon />
                           </ActionList.LeadingVisual>

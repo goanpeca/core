@@ -14,13 +14,13 @@ import {
   requestDatalayerAPI,
   type RunResponseError,
 } from '..';
-import { asRuntimeSnapshot } from '../../models';
+import { asRuntimeSnapshot } from '../../api2';
 import type {
   IRuntimeSnapshot,
   IAPIRuntimeSnapshot,
   IDatalayerEnvironment,
   IRuntimePod,
-} from '../../models';
+} from '../../api2';
 import { iamStore, runtimesStore } from '../../state';
 import { sleep } from '../../utils';
 

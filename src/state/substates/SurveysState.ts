@@ -11,7 +11,7 @@ import {
   asSurvey,
   IGetSurveysResponseType,
   ICreateSurveyResponseType,
-} from '../../models';
+} from '../../api2';
 import { coreStore } from './CoreState';
 import { iamStore } from './IAMState';
 

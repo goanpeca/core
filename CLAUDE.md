@@ -32,12 +32,12 @@ Datalayer Core - Python SDK and CLI for the Datalayer AI Platform. Hybrid Python
 
 **TypeScript/React**: NPM package `@datalayer/core`
 
-- API layer with `DatalayerApi.ts`
-- Component library (UI, Jupyter, business logic)
-- Zustand state management
-- 70+ TypeScript models
-- Custom hooks for auth, platform integration, UI/UX
-- Universal navigation system that auto-detects React Router, Next.js, or falls back to native browser navigation
+- **Clean API Layer**: `api2/` provides stateless clients for IAM, Runtimes, and Spacer APIs
+- **Domain Models**: All 70+ models moved to `api2/models/` for clean Node.js exports
+- **Component Library**: UI, Jupyter, and business logic components
+- **State Management**: Zustand for React state, models folder now re-exports from api2
+- **Custom Hooks**: Auth, platform integration, UI/UX hooks
+- **Universal Navigation**: Auto-detects React Router, Next.js, or native browser navigation
 
 ## Configuration
 
@@ -135,6 +135,20 @@ Features:
   - `npm run format` / `npm run format:check` - Prettier formatting
   - `npm run type-check` - TypeScript compilation check
 
+## API Architecture Notes
+
+- **api2/**: Clean, stateless API clients for Node.js and browser use
+  - `iam/`: Authentication, users, organizations, teams, tokens, secrets, usage
+  - `runtimes/`: Environments, compute runtimes, snapshots
+  - `spacer/`: Spaces, notebooks, documents, assignments, courses, exercises, datasets
+  - `models/`: All domain models (moved from src/models/ for clean exports)
+  - `base.ts`: Universal fetch-based HTTP client with auth
+  - `types.ts`: API request/response types and model re-exports
+
+- **Backward Compatibility**: `src/models/` now re-exports from `api2/models/`
+- **Import Strategy**: All internal code now imports from `api2` for consistency
+- **Node.js Safe**: No browser dependencies in api2, safe for server-side use
+
 ## AI Notes IMPORTANT
 
 - Use npm, not yarn
@@ -143,5 +157,5 @@ Features:
   - npm run format
   - npm run lint
   - npm run type-check
-- Avoid old-school require imports
+- Import from api2 for models and API clients
 - Use playwright MCP to inspect things directly

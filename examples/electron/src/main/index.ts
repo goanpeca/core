@@ -34,13 +34,13 @@ function createWindow() {
           ...details.responseHeaders,
           'Content-Security-Policy': [
             "default-src 'self'; " +
-            "script-src 'self'; " +
-            "style-src 'self' 'unsafe-inline'; " +
-            "img-src 'self' data: https:; " +
-            "connect-src 'self' https://prod1.datalayer.run https://*.datalayer.io; " +
-            "font-src 'self' data:;"
-          ]
-        }
+              "script-src 'self'; " +
+              "style-src 'self' 'unsafe-inline'; " +
+              "img-src 'self' data: https:; " +
+              "connect-src 'self' https://prod1.datalayer.run https://*.datalayer.io; " +
+              "font-src 'self' data:;",
+          ],
+        },
       });
     });
   }

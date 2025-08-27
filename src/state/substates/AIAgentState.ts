@@ -5,7 +5,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import type { IAIAgent } from '../../models';
+import type { IAIAgent } from '../../api2';
 
 export type AIAgentState = {
   aiAgents: readonly IAIAgent[];

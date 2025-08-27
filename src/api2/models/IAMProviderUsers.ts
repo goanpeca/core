@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import { asDisplayName } from '../utils';
+import { asDisplayName } from './utils';
 import { IIAMProviderName } from './IAMProvidersSpecs';
 
 /*

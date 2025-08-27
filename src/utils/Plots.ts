@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import type { IUsage } from '../models';
+import type { IUsage } from '../api2';
 import {
   getDate,
   getDaysInMonth,

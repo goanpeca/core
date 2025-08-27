@@ -3,6 +3,7 @@
 ## Content Security Policy (CSP) Warning
 
 During development, you'll see a warning about Content Security Policy:
+
 ```
 Electron Security Warning (Insecure Content-Security-Policy)
 ```
@@ -25,6 +26,7 @@ This is **expected and normal** during development because:
 ## Production CSP Policy
 
 In production, the app enforces:
+
 - No `unsafe-eval` in scripts
 - Only self-hosted scripts allowed
 - API connections limited to Datalayer domains
@@ -32,11 +34,11 @@ In production, the app enforces:
 
 ## Development vs Production
 
-| Feature | Development | Production |
-|---------|------------|------------|
-| CSP Warning | Shows | Hidden |
-| unsafe-eval | Allowed (for HMR) | Blocked |
-| DevTools | Open | Closed |
-| Debug Logs | Enabled | Disabled |
+| Feature     | Development       | Production |
+| ----------- | ----------------- | ---------- |
+| CSP Warning | Shows             | Hidden     |
+| unsafe-eval | Allowed (for HMR) | Blocked    |
+| DevTools    | Open              | Closed     |
+| Debug Logs  | Enabled           | Disabled   |
 
 The security warning is a helpful reminder but doesn't indicate a problem during development.

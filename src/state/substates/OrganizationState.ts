@@ -5,7 +5,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import { IAnyOrganization } from '../../models';
+import { IAnyOrganization } from '../../api2';
 
 export type IOrganizationState = {
   organizations: IAnyOrganization[];

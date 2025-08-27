@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import { IDataset } from '../models';
+import { IDataset } from '../api2';
 
 export const getDatasetCell = (dataset: IDataset) => {
   switch (dataset.contentType) {

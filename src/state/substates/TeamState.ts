@@ -5,7 +5,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import { IBaseTeam } from '../../models';
+import { IBaseTeam } from '../../api2';
 import { TEAMS_MOCK } from '../../mocks';
 
 export type ITeamState = {

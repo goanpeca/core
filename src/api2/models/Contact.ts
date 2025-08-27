@@ -8,7 +8,7 @@ import {
   IContactIAMProvider,
 } from './ContactIAMProvider';
 import { asContactEvent, IContactEvent } from './ContactEvent';
-import { asDisplayName, namesAsInitials } from '../utils';
+import { asDisplayName, namesAsInitials } from './utils';
 
 export class Contact implements IContact {
   id: string;

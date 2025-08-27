@@ -296,8 +296,7 @@ class DatalayerAPIService {
       console.error('Failed to fetch space items:', error);
       return {
         success: false,
-        error:
-          error instanceof Error ? error.message : 'Failed to fetch items',
+        error: error instanceof Error ? error.message : 'Failed to fetch items',
       };
     }
   }
@@ -313,9 +312,12 @@ class DatalayerAPIService {
   }> {
     try {
       console.log('listNotebooks: Starting notebook fetch...');
-      console.log('listNotebooks: Current token:', this.token ? 'Set' : 'Not set');
+      console.log(
+        'listNotebooks: Current token:',
+        this.token ? 'Set' : 'Not set'
+      );
       console.log('listNotebooks: Current baseUrl:', this.baseUrl);
-      
+
       // Check if we're authenticated
       if (!this.token) {
         console.log('listNotebooks: No token available, returning mock data');
@@ -331,7 +333,7 @@ class DatalayerAPIService {
               type: 'notebook',
             },
             {
-              uid: 'mock-2', 
+              uid: 'mock-2',
               name_t: 'Machine Learning Tutorial.ipynb',
               creation_ts_dt: new Date(Date.now() - 172800000).toISOString(),
               last_update_ts_dt: new Date(Date.now() - 3600000).toISOString(),
@@ -345,29 +347,39 @@ class DatalayerAPIService {
               type: 'notebook',
             },
           ],
-          error: 'Using mock data - not authenticated'
+          error: 'Using mock data - not authenticated',
         };
       }
-      
+
       // First get user spaces if no spaceId provided
       let selectedSpace: any;
-      
+
       if (!spaceId) {
-        console.log('listNotebooks: No spaceId provided, fetching user spaces...');
+        console.log(
+          'listNotebooks: No spaceId provided, fetching user spaces...'
+        );
         const spacesResponse = await this.getUserSpaces();
-        console.log('listNotebooks: Spaces response:', JSON.stringify(spacesResponse, null, 2));
-        
-        if (spacesResponse.success && spacesResponse.data && spacesResponse.data.length > 0) {
+        console.log(
+          'listNotebooks: Spaces response:',
+          JSON.stringify(spacesResponse, null, 2)
+        );
+
+        if (
+          spacesResponse.success &&
+          spacesResponse.data &&
+          spacesResponse.data.length > 0
+        ) {
           // Find default space or one called "library"
-          selectedSpace = spacesResponse.data.find(
-            (space: any) => 
-              space.handle === 'library' || 
-              space.name === 'Library' ||
-              space.is_default === true
-          ) || spacesResponse.data[0];
-          
+          selectedSpace =
+            spacesResponse.data.find(
+              (space: any) =>
+                space.handle === 'library' ||
+                space.name === 'Library' ||
+                space.is_default === true
+            ) || spacesResponse.data[0];
+
           console.log('listNotebooks: Selected space:', selectedSpace);
-          
+
           if (selectedSpace) {
             spaceId = selectedSpace.id || selectedSpace.uid;
           }
@@ -385,15 +397,15 @@ class DatalayerAPIService {
                 type: 'notebook',
               },
             ],
-            error: spacesResponse.error || 'No spaces available'
+            error: spacesResponse.error || 'No spaces available',
           };
         }
       }
 
       if (!spaceId) {
         console.log('listNotebooks: No space available, returning mock data');
-        return { 
-          success: true, 
+        return {
+          success: true,
           data: [
             {
               uid: 'mock-1',
@@ -403,45 +415,60 @@ class DatalayerAPIService {
               type: 'notebook',
             },
           ],
-          error: 'No spaces available'
+          error: 'No spaces available',
         };
       }
 
       console.log(`listNotebooks: Fetching items from space ${spaceId}...`);
-      
+
       // Fetch all items from the space
       const itemsResponse = await this.getSpaceItems(spaceId);
-      console.log('listNotebooks: Items response:', JSON.stringify(itemsResponse, null, 2));
-      
-      if (itemsResponse.success && itemsResponse.data && itemsResponse.data.length > 0) {
+      console.log(
+        'listNotebooks: Items response:',
+        JSON.stringify(itemsResponse, null, 2)
+      );
+
+      if (
+        itemsResponse.success &&
+        itemsResponse.data &&
+        itemsResponse.data.length > 0
+      ) {
         // Filter only notebook items - the field is type_s in the actual response
         const notebooks = itemsResponse.data.filter(
-          (item: any) => item.type === 'notebook' || item.type_s === 'notebook' || item.item_type === 'notebook'
+          (item: any) =>
+            item.type === 'notebook' ||
+            item.type_s === 'notebook' ||
+            item.item_type === 'notebook'
         );
-        
-        console.log(`listNotebooks: Found ${notebooks.length} notebooks out of ${itemsResponse.data.length} items`);
-        
+
+        console.log(
+          `listNotebooks: Found ${notebooks.length} notebooks out of ${itemsResponse.data.length} items`
+        );
+
         if (notebooks.length > 0) {
-          return { 
-            success: true, 
+          return {
+            success: true,
             data: notebooks,
-            spaceInfo: selectedSpace
+            spaceInfo: selectedSpace,
           };
         }
       }
-      
+
       // Fallback to specific notebook endpoint
       console.log('listNotebooks: Trying fallback notebook endpoint...');
       const response = await this.request(
         `/api/spacer/v1/spaces/${spaceId}/items/types/notebook`
       );
-      
-      console.log('listNotebooks: Fallback response:', JSON.stringify(response, null, 2));
-      
-      return { 
-        success: true, 
+
+      console.log(
+        'listNotebooks: Fallback response:',
+        JSON.stringify(response, null, 2)
+      );
+
+      return {
+        success: true,
         data: response.items || response || [],
-        spaceInfo: selectedSpace
+        spaceInfo: selectedSpace,
       };
     } catch (error) {
       console.error('listNotebooks: Error fetching notebooks:', error);
@@ -457,7 +484,8 @@ class DatalayerAPIService {
             type: 'notebook',
           },
         ],
-        error: error instanceof Error ? error.message : 'Failed to fetch notebooks',
+        error:
+          error instanceof Error ? error.message : 'Failed to fetch notebooks',
       };
     }
   }

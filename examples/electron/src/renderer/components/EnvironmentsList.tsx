@@ -455,8 +455,11 @@ const EnvironmentsList: React.FC = () => {
               {selectedEnv || 'None'}
             </Text>
           </Box>
-          <Text sx={{ fontSize: 0, color: 'fg.subtle', mt: 2, lineHeight: 1.5 }}>
-            This environment will be used when creating new runtimes and notebooks.
+          <Text
+            sx={{ fontSize: 0, color: 'fg.subtle', mt: 2, lineHeight: 1.5 }}
+          >
+            This environment will be used when creating new runtimes and
+            notebooks.
           </Text>
         </Box>
       )}

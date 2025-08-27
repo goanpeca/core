@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import { asDisplayName, namesAsInitials } from '../utils';
+import { asDisplayName, namesAsInitials } from './utils';
 import { IInvite } from './Invite';
 import { asIAMProviderLinked, IIAMProviderLinked } from './IAMProviderLinked';
 import { BOOTSTRAP_USER_ONBOARDING, IUserOnboarding } from './UserOnboarding';

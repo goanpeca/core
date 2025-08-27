@@ -14,12 +14,12 @@ import {
   IIAMProviderName,
   IAMProvidersSpecs,
   IIAMResponseType,
-} from '../../models';
+} from '../../api2';
 import type {
   ICredits,
   ICreditsReservation,
   IRESTBaseResponse,
-} from '../../models';
+} from '../../api2';
 import {
   getStoredToken,
   getStoredUser,

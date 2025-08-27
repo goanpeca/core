@@ -5,7 +5,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import { IDatasource } from '../../models';
+import { IDatasource } from '../../api2';
 
 export type IDatasourceState = {
   datasources: IDatasource[];

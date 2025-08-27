@@ -5,7 +5,7 @@
 
 import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
-import { ICell } from '../../models';
+import { ICell } from '../../api2';
 
 export type ICellState = {
   cell?: ICell;

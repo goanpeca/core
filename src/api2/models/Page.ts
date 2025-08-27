@@ -3,7 +3,7 @@
  * Distributed under the terms of the Modified BSD License.
  */
 
-import { INotebookContent } from '@jupyterlab/nbformat';
+import type { INotebookContent } from '@jupyterlab/nbformat';
 import { IUser, asUser } from './User';
 import { PageTagName } from './PageTag';
 import { asRuntimeSnapshot, IRuntimeSnapshot } from './RuntimeSnapshot';

@@ -8,8 +8,8 @@ import { ISpaceItem } from './SpaceItem';
 import { ICourse as ICourse } from './Course';
 import { IOrganization } from './Organization';
 import { asUser, IUser } from './User';
-import { asArray } from '../utils';
-import { newUserMock } from './../mocks/models';
+import { asArray } from './utils';
+import { newUserMock } from './mocks';
 
 /**
  * Convert the raw space object to {@link ISpace}.

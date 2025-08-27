@@ -5,7 +5,7 @@
 
 import { IUser } from './User';
 import { IContact } from './Contact';
-import { asDisplayName, namesAsInitials } from '../utils';
+import { asDisplayName, namesAsInitials } from './utils';
 
 export const asInvite = (i: any): IInvite => {
   const to: Partial<IContact> = {
